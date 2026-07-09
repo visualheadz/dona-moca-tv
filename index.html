@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dona Moça TV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DONA MOÇA TV  ·  Recepção · Samsung Tizen
+   Identidade Fase 2/3 — ébano, terracota, areia, Cormorant, Jost
+
+   ------------------------------------------------------------
+   GUIA DE IMAGENS POR CARD  (briefing para o fotógrafo/designer)
+   Direção: manhã editorial · luz lateral dourada 6h–9h · sombras
+   longas · LUT da marca (sombras avermelhadas, highlights em areia,
+   verde dessaturado) · pessoas de costas ou ausentes, nunca posando.
+   Nunca: filtro frio, HDR, saturação excessiva, logo sobre a foto.
+   Coloque os arquivos na MESMA pasta do index.html e use só o nome.
+
+   • Abertura ....... sem foto (card do wordmark). Só a flor textura.
+   • Maré ........... sem foto (legibilidade dos números). Fundo areia.
+   • Tempo .......... sem foto (legibilidade). Fundo ébano.
+   • A ilha (gira) — uma foto por dica:
+       ilha-farol.jpg .... vista do alto ao entardecer, silhueta da
+                           ilha, luz baixa, horizonte limpo.
+       ilha-gamboa.jpg ... areia exposta na maré baixa, manguezal,
+                           figura de costas ao longe ou ninguém.
+       ilha-pordosol.jpg . sol caindo no Atlântico, rochas, contraluz.
+       ilha-praias.jpg ... mar calmo, piscina natural, barco distante.
+   • Alma da casa (gira) — uma foto por curiosidade:
+       baiana-samba.jpg .. saia rodada / pandeiro em movimento,
+                           sem rosto posado, grão e calor.
+       baiana-hibisco.jpg  close do hibisco vermelho, luz lateral,
+                           casa desfocada ao fundo.
+       baiana-acaraje.jpg  tabuleiro da baiana, dendê, detalhe, fim
+                           de tarde, cor quente.
+       baiana-anfitria.jpg gesto de acolhimento: mão entregando a
+                           chave, flor sobre a cama — sem rosto.
+   • Fotos da casa (giram entre os cards):
+       foto-piscina.jpg .. borda infinita ao amanhecer, mar ao fundo.
+       foto-praia.jpg .... Primeira Praia de manhã, luz lateral.
+       foto-quarto.jpg ... quarto frente-mar, cortina ao vento, cama
+                           preservada, sem cara de "cama de rede".
+   ------------------------------------------------------------
+   Edite e salve sempre em UTF-8.
+   ============================================================ */
+
+:root{
+  --ebano:#1E1510;      --terra-escuro:#7D3A1F;  --terracota:#B05A30;
+  --terra-claro:#D4896A;--terra-palido:#EDC5B0;  --areia:#F0E0CC;
+  --creme:#FAF5EE;      --cinza:#888078;         --verde:#2E5E52;
+  --nevoa:#A8C5BC;
+  --display:'Cormorant Garamond', Georgia, serif;
+  --util:'Jost', 'Helvetica Neue', Arial, sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;background:#000;overflow:hidden}
+
+#stage{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:min(100vw,177.78vh);height:min(56.25vw,100vh);
+  background:var(--ebano);overflow:hidden;font-size:clamp(10px,1.46vw,28px);}
+
+/* ---------- Barra superior ---------- */
+.topbar{position:absolute;top:0;left:0;right:0;height:3.2em;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2.6em;pointer-events:none;}
+.handle{font-family:var(--util);font-weight:200;color:var(--verde);
+  font-size:.62em;letter-spacing:.42em;text-transform:uppercase;}
+.clock{font-family:var(--util);font-weight:200;font-size:.62em;
+  letter-spacing:.34em;text-transform:uppercase}
+.topbar.on-dark .clock{color:var(--areia)}
+.topbar.on-light .clock{color:var(--cinza)}
+
+/* ---------- Flor textura ---------- */
+.flor{position:absolute;z-index:1;pointer-events:none;opacity:.08;filter:saturate(.9)}
+.flor svg{display:block;width:100%;height:100%}
+
+/* ---------- Card base ---------- */
+.card{position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;
+  justify-content:center;padding:0 7em;opacity:0;visibility:hidden;
+  transition:opacity 1.2s ease;}
+.card.active{opacity:1;visibility:visible}
+.card.dark{background:var(--ebano);color:var(--areia)}
+.card.cream{background:var(--creme);color:var(--ebano)}
+.card.sand{background:var(--areia);color:var(--ebano)}
+
+.eyebrow{font-family:var(--util);font-weight:200;font-size:.62em;
+  letter-spacing:.46em;text-transform:uppercase;margin-bottom:1.6em;}
+.card.dark .eyebrow{color:var(--terra-claro)}
+.card.cream .eyebrow,.card.sand .eyebrow{color:var(--terracota)}
+
+/* ---------- 1 · Abertura ---------- */
+#c-abertura .saudacao{font-family:var(--display);font-style:italic;font-weight:300;
+  font-size:5.4em;line-height:.98;color:var(--terra-claro);}
+#c-abertura .wordmark{margin:.5em 0 .7em}
+#c-abertura .linha{font-family:var(--display);font-style:italic;font-weight:300;
+  font-size:1.9em;color:var(--areia);max-width:18em;line-height:1.3;}
+.wordmark-type{display:flex;flex-direction:column;line-height:.84}
+.wordmark-type span{font-family:var(--display);font-weight:300;font-style:italic;
+  font-size:3.2em;letter-spacing:.02em}
+.wordmark-type .dona{color:var(--terra-claro)}
+.wordmark-type .moca{color:var(--areia)}
+
+/* ---------- 2 · Maré ---------- */
+#c-mare .mare-grid{display:flex;gap:4.4em;margin-top:.4em}
+.mare-col{display:flex;flex-direction:column}
+.mare-tag{font-family:var(--util);font-weight:300;font-size:.66em;letter-spacing:.34em;
+  text-transform:uppercase;color:var(--terracota);display:flex;align-items:center;
+  gap:.6em;margin-bottom:.5em}
+.mare-tag .arrow{font-size:1.1em;line-height:1}
+.mare-hora{font-family:var(--display);font-style:italic;font-weight:300;font-size:3.7em;
+  line-height:1;color:var(--ebano)}
+.mare-alt{font-family:var(--util);font-weight:300;font-size:.7em;letter-spacing:.12em;
+  color:var(--cinza);margin-top:.3em}
+.mare-nota{font-family:var(--display);font-style:italic;font-size:1.5em;
+  color:var(--terra-escuro);margin-top:1.9em;max-width:24em;line-height:1.35}
+.mare-fonte{font-family:var(--util);font-weight:200;font-size:.5em;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--cinza);position:absolute;bottom:2.4em;left:7em}
+
+/* ---------- 3 · Tempo ---------- */
+#c-tempo .agora{display:flex;align-items:flex-start;gap:1em}
+.temp-now{font-family:var(--display);font-style:italic;font-weight:300;font-size:7em;
+  line-height:.86;color:var(--areia)}
+.temp-now .deg{font-size:.42em;vertical-align:top}
+.temp-cond{font-family:var(--display);font-style:italic;font-size:1.9em;
+  color:var(--terra-claro);margin-top:.4em}
+.temp-meta{font-family:var(--util);font-weight:200;font-size:.62em;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--cinza);margin-top:.6em}
+.icon-now{width:2.6em;height:2.6em;margin-top:.4em;flex:0 0 auto}
+.icon-now svg,.fc-ico svg{width:100%;height:100%;display:block}
+.forecast{display:flex;gap:3.2em;margin-top:2.4em}
+.fc{display:flex;flex-direction:column;align-items:flex-start;gap:.5em}
+.fc-dia{font-family:var(--util);font-weight:300;font-size:.6em;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--terra-palido)}
+.fc-ico{width:1.7em;height:1.7em}
+.fc-temp{font-family:var(--display);font-style:italic;font-size:1.5em;color:var(--areia)}
+.fc-temp .min{color:var(--cinza);font-size:.72em}
+
+/* ---------- 4 · Ilha / 5 · Baiana (com slot de foto) ---------- */
+.editorial{padding:0}
+.editorial .ed-content{position:relative;z-index:2;padding:0 7em;width:100%}
+.editorial .ed-bg,.editorial .ed-ov{position:absolute;inset:0;z-index:0;opacity:0;
+  transition:opacity .9s ease}
+.editorial.has-photo .ed-bg{opacity:1;background-size:cover;background-position:center;
+  transform:scale(1.05)}
+.editorial.has-photo.active .ed-bg{animation:kenburns 18s ease-out forwards}
+.editorial.has-photo .ed-ov{opacity:1;background:linear-gradient(0deg,
+  rgba(30,21,16,.84) 0%, rgba(30,21,16,.50) 46%, rgba(30,21,16,.34) 100%)}
+.editorial .titulo{font-family:var(--display);font-style:italic;font-weight:300;
+  font-size:3.4em;line-height:1.06;color:var(--ebano);max-width:15em}
+.editorial.dark .titulo{color:var(--areia)}
+.editorial .corpo{font-family:var(--util);font-weight:300;font-size:.92em;line-height:1.7;
+  letter-spacing:.02em;color:var(--terra-escuro);max-width:26em;margin-top:1.4em}
+.editorial.dark .corpo{color:var(--nevoa)}
+/* quando tem foto, texto sempre claro sobre o escurecido */
+.editorial.has-photo .titulo{color:var(--creme)}
+.editorial.has-photo .corpo{color:var(--nevoa)}
+.editorial.has-photo .eyebrow{color:var(--terra-palido)}
+
+/* ---------- Cards de FOTO ---------- */
+.card.photo-card{padding:0}
+.photo-bg{position:absolute;inset:0;background-size:cover;background-position:center;
+  transform:scale(1.05);will-change:transform;}
+.photo-card.active .photo-bg{animation:kenburns 18s ease-out forwards}
+@keyframes kenburns{0%{transform:scale(1.05) translate(0,0)}
+  100%{transform:scale(1.14) translate(-1.5%,-1.5%)}}
+.photo-ov{position:absolute;inset:0;background:linear-gradient(0deg,
+  rgba(30,21,16,.80) 0%, rgba(30,21,16,.18) 42%, rgba(30,21,16,0) 70%);}
+.photo-cap{position:absolute;left:7em;bottom:4.6em;z-index:11;max-width:20em}
+.photo-cap .eyebrow{color:var(--terra-palido)}
+.photo-cap .frase{font-family:var(--display);font-style:italic;font-weight:300;
+  font-size:2.7em;line-height:1.16;color:var(--creme);max-width:17em}
+@media (prefers-reduced-motion:reduce){
+  .photo-card.active .photo-bg,.editorial.has-photo.active .ed-bg{animation:none}
+  .card{transition:none}
+}
+
+/* ---------- Progresso ---------- */
+.dots{position:absolute;bottom:2.2em;left:50%;transform:translateX(-50%);z-index:60;
+  display:flex;gap:.7em}
+.dot{width:.34em;height:.34em;border-radius:50%;background:rgba(136,128,120,.4);
+  transition:background .4s,transform .4s}
+.dot.on{background:var(--terracota);transform:scale(1.35)}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <div class="topbar on-dark" id="topbar">
+    <div class="handle">@pousadadonamoca</div>
+    <div class="clock" id="clock">—</div>
+  </div>
+
+  <!-- 1 · ABERTURA -->
+  <section class="card dark active" id="c-abertura">
+    <div class="flor" style="width:42em;height:42em;right:-9em;bottom:-11em;opacity:.07" data-flor></div>
+    <div class="saudacao" id="saudacao">Bom dia</div>
+    <div class="wordmark" id="wordmark-slot">
+      <!-- SLOT: cole o conteúdo de DM_wordmark.svg (V1 ébano) -->
+      <div class="wordmark-type"><span class="dona">Dona</span><span class="moca">Moça</span></div>
+    </div>
+    <div class="linha">Primeira Praia. Nove quartos, todos de frente para o mar.</div>
+  </section>
+
+  <!-- 2 · MARÉ -->
+  <section class="card cream" id="c-mare">
+    <div class="flor" style="width:30em;height:30em;left:-7em;top:-8em;opacity:.06" data-flor></div>
+    <div class="eyebrow">A maré hoje</div>
+    <div class="mare-grid" id="mare-grid"></div>
+    <div class="mare-nota" id="mare-nota">As piscinas naturais aparecem na maré baixa — o melhor momento para o banho.</div>
+    <div class="mare-fonte" id="mare-fonte">Referência Marinha do Brasil · não use para navegação</div>
+  </section>
+
+  <!-- 3 · TEMPO -->
+  <section class="card dark" id="c-tempo">
+    <div class="eyebrow">O tempo na ilha</div>
+    <div class="agora">
+      <div class="icon-now" id="tempo-icon"></div>
+      <div>
+        <div class="temp-now"><span id="tempo-temp">—</span><span class="deg">°</span></div>
+        <div class="temp-cond" id="tempo-cond">—</div>
+        <div class="temp-meta" id="tempo-meta"></div>
+      </div>
+    </div>
+    <div class="forecast" id="forecast"></div>
+  </section>
+
+  <!-- 4 · A ILHA HOJE -->
+  <section class="card cream editorial" id="c-ilha">
+    <div class="ed-bg"></div><div class="ed-ov"></div>
+    <div class="ed-content">
+      <div class="eyebrow">Para o seu dia</div>
+      <div class="titulo" id="ilha-titulo">—</div>
+      <div class="corpo" id="ilha-corpo">—</div>
+    </div>
+  </section>
+
+  <!-- 5 · ALMA BAIANA -->
+  <section class="card dark editorial" id="c-baiana">
+    <div class="ed-bg"></div><div class="ed-ov"></div>
+    <div class="ed-content">
+      <div class="eyebrow">Alma da casa</div>
+      <div class="titulo" id="baiana-titulo">—</div>
+      <div class="corpo" id="baiana-corpo">—</div>
+    </div>
+  </section>
+
+  <!-- Cards de FOTO são criados via JS -->
+
+  <div class="dots" id="dots"></div>
+</div>
+
+<script>
+/* =========================================================
+   CONFIG  —  é aqui que você mexe
+   ========================================================= */
+const CONFIG = {
+  lat:-13.3817, lng:-38.9139, tz:'America/Bahia',
+  cardSeconds:11,
+
+  demoMode:false,
+  demoWeather:{ temp:28, code:2, humidity:78, wind:14,
+    daily:[ {code:1,max:29,min:24}, {code:2,max:28,min:24}, {code:80,max:27,min:23} ] },
+
+  tideApiKey:'',
+  tideFallback:[
+    {type:'low', time:'04:50', height:0.3},
+    {type:'high',time:'11:05', height:2.1},
+    {type:'low', time:'17:18', height:0.4},
+    {type:'high',time:'23:30', height:2.0}
+  ],
+
+  /* Fotos da casa que giram entre os cards. tone = cor do fundo de
+     espera até a foto entrar. Veja o GUIA DE IMAGENS no topo. */
+  photos:[
+    { src:'foto-piscina.jpg', tone:'casa', eyebrow:'A casa',         frase:'A borda infinita devolve o mar inteiro de uma só vez.' },
+    { src:'foto-praia.jpg',   tone:'areia',eyebrow:'Primeira Praia', frase:'A manhã chega primeiro aqui, pela água.' },
+    { src:'foto-quarto.jpg',  tone:'pordosol',eyebrow:'Os quartos',  frase:'Nove quartos. Todos abrem para o mar.' }
+  ]
+};
+
+/* Fundos de espera por tema (até trocar pela foto real) */
+const TONES={
+  mar:     "linear-gradient(160deg,#2E5E52 0%,#1A3D35 55%,#1E1510 100%)",
+  areia:   "radial-gradient(120% 100% at 70% 25%,#EDC5B0 0%,#D4896A 35%,#7D3A1F 75%,#1E1510 100%)",
+  pordosol:"linear-gradient(160deg,#D4896A 0%,#B05A30 40%,#7D3A1F 70%,#1E1510 100%)",
+  flor:    "radial-gradient(110% 90% at 65% 30%,#D4896A 0%,#B05A30 30%,#7D3A1F 60%,#1E1510 100%)",
+  casa:    "linear-gradient(150deg,#7D3A1F 0%,#2E5E52 60%,#1E1510 100%)"
+};
+const toneBg=t=>TONES[t]||TONES.areia;
+
+/* =========================================================
+   ÍCONES + flor
+   ========================================================= */
+const ICONS = {
+  sun:`<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><circle cx="24" cy="24" r="8"/><path d="M24 6v4M24 38v4M6 24h4M38 24h4M11 11l3 3M34 34l3 3M37 11l-3 3M14 34l-3 3"/></svg>`,
+  partly:`<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="6"/><path d="M18 6v3M9 18H6M11 11l-2-2M27 11l2-2"/><path d="M20 34h16a6 6 0 0 0 0-12 8 8 0 0 0-15 2"/></svg>`,
+  cloud:`<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M16 36h18a7 7 0 0 0 0-14 9 9 0 0 0-17 2 6 6 0 0 0-1 12z"/></svg>`,
+  rain:`<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 30h18a7 7 0 0 0 0-14 9 9 0 0 0-17 2 6 6 0 0 0-1 12z"/><path d="M18 36l-2 5M26 36l-2 5M34 36l-2 5"/></svg>`,
+  storm:`<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 28h18a7 7 0 0 0 0-14 9 9 0 0 0-17 2 6 6 0 0 0-1 12z"/><path d="M24 30l-4 7h6l-4 7"/></svg>`,
+  fog:`<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M10 20h28M8 27h32M12 34h24M14 41h20"/></svg>`
+};
+const FLOR_SVG = `<svg viewBox="0 0 100 100" fill="currentColor"><g>
+  ${Array.from({length:8}).map((_,i)=>`<ellipse cx="50" cy="26" rx="9" ry="22" transform="rotate(${i*45} 50 50)"/>`).join('')}
+  <circle cx="50" cy="50" r="7"/></g></svg>`;
+
+function wmo(code){
+  const m={0:['Céu limpo','sun'],1:['Predominantemente limpo','sun'],
+    2:['Parcialmente nublado','partly'],3:['Nublado','cloud'],
+    45:['Névoa','fog'],48:['Névoa','fog'],
+    51:['Garoa leve','rain'],53:['Garoa','rain'],55:['Garoa intensa','rain'],
+    61:['Chuva fraca','rain'],63:['Chuva','rain'],65:['Chuva forte','rain'],
+    66:['Chuva','rain'],67:['Chuva','rain'],
+    71:['Neve','cloud'],73:['Neve','cloud'],75:['Neve','cloud'],
+    80:['Pancadas de chuva','rain'],81:['Pancadas de chuva','rain'],82:['Aguaceiros','rain'],
+    95:['Tempestade','storm'],96:['Tempestade','storm'],99:['Tempestade','storm']};
+  return m[code]||['—','partly'];
+}
+
+/* =========================================================
+   RELÓGIO + SAUDAÇÃO
+   ========================================================= */
+function nowParts(){
+  const f=new Intl.DateTimeFormat('pt-BR',{timeZone:CONFIG.tz,hour:'2-digit',minute:'2-digit',hour12:false});
+  const d=new Intl.DateTimeFormat('pt-BR',{timeZone:CONFIG.tz,weekday:'long',day:'numeric',month:'long'});
+  const h=parseInt(new Intl.DateTimeFormat('en-US',{timeZone:CONFIG.tz,hour:'2-digit',hour12:false}).format(new Date()),10);
+  return {hm:f.format(new Date()), data:d.format(new Date()), hour:h};
+}
+function tickClock(){
+  const p=nowParts();
+  document.getElementById('clock').textContent=p.hm+'  ·  '+p.data;
+  document.getElementById('saudacao').textContent = p.hour<12?'Bom dia':(p.hour<18?'Boa tarde':'Boa noite');
+}
+
+/* =========================================================
+   MARÉ
+   ========================================================= */
+function renderTide(list){
+  document.getElementById('mare-grid').innerHTML=list.map(t=>{
+    const alta=t.type==='high';
+    return `<div class="mare-col">
+      <div class="mare-tag"><span class="arrow">${alta?'↑':'↓'}</span>${alta?'Preia-mar':'Baixa-mar'}</div>
+      <div class="mare-hora">${t.time}</div>
+      <div class="mare-alt">${t.height.toFixed(1).replace('.',',')} m</div></div>`;
+  }).join('');
+  const low=list.find(t=>t.type==='low');
+  if(low) document.getElementById('mare-nota').textContent=
+    `Maré baixa às ${low.time} — as piscinas naturais se abrem para o banho.`;
+}
+async function loadTide(){
+  if(!CONFIG.tideApiKey){ renderTide(CONFIG.tideFallback); return; }
+  try{
+    const s=new Date();s.setHours(0,0,0,0);const e=new Date();e.setHours(23,59,0,0);
+    const url=`https://api.stormglass.io/v2/tide/extremes/point?lat=${CONFIG.lat}&lng=${CONFIG.lng}&start=${s.toISOString()}&end=${e.toISOString()}`;
+    const r=await fetch(url,{headers:{Authorization:CONFIG.tideApiKey}});
+    const j=await r.json();
+    const list=(j.data||[]).map(x=>({type:x.type,height:Math.abs(x.height),
+      time:new Intl.DateTimeFormat('pt-BR',{timeZone:CONFIG.tz,hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(x.time))}));
+    renderTide(list.length?list:CONFIG.tideFallback);
+    if(list.length) document.getElementById('mare-fonte').textContent='Fonte: Stormglass · não use para navegação';
+  }catch(e){ renderTide(CONFIG.tideFallback); }
+}
+
+/* =========================================================
+   TEMPO
+   ========================================================= */
+function renderWeather(d){
+  const [cond,ic]=wmo(d.code);
+  document.getElementById('tempo-temp').textContent=Math.round(d.temp);
+  document.getElementById('tempo-cond').textContent=cond;
+  document.getElementById('tempo-meta').textContent=
+    `Umidade ${d.humidity}%   ·   Vento ${Math.round(d.wind)} km/h`;
+  document.getElementById('tempo-icon').innerHTML=ICONS[ic];
+  const dias=['dom','seg','ter','qua','qui','sex','sáb'];
+  document.getElementById('forecast').innerHTML=d.daily.map((day,i)=>{
+    const dt=new Date();dt.setDate(dt.getDate()+i+1);
+    const [,ici]=wmo(day.code);
+    return `<div class="fc"><div class="fc-dia">${dias[dt.getDay()]}</div>
+      <div class="fc-ico">${ICONS[ici]}</div>
+      <div class="fc-temp">${Math.round(day.max)}° <span class="min">${Math.round(day.min)}°</span></div></div>`;
+  }).join('');
+}
+async function loadWeather(){
+  if(CONFIG.demoMode) return;
+  try{
+    const url=`https://api.open-meteo.com/v1/forecast?latitude=${CONFIG.lat}&longitude=${CONFIG.lng}`
+      +`&current=temperature_2m,weather_code,relative_humidity_2m,wind_speed_10m`
+      +`&daily=weather_code,temperature_2m_max,temperature_2m_min`
+      +`&timezone=${encodeURIComponent(CONFIG.tz)}&forecast_days=4`;
+    const r=await fetch(url);const j=await r.json();const c=j.current;
+    const daily=[];for(let i=1;i<j.daily.time.length;i++)daily.push(
+      {code:j.daily.weather_code[i],max:j.daily.temperature_2m_max[i],min:j.daily.temperature_2m_min[i]});
+    renderWeather({temp:c.temperature_2m,code:c.weather_code,humidity:c.relative_humidity_2m,wind:c.wind_speed_10m,daily});
+  }catch(e){}
+}
+
+/* =========================================================
+   ROTAÇÕES EDITORIAIS  (cada dica com sua imagem sugerida)
+   ========================================================= */
+const ILHA=[
+  {t:'O Farol, no fim da tarde',c:'A trilha curta até o Farol entrega a vista mais aberta da ilha. Vá pouco antes do pôr do sol — a luz baixa faz o trabalho.', img:'ilha-farol.jpg', tone:'pordosol'},
+  {t:'Gamboa, na maré baixa',c:'Quando o mar recua, a caminhada pela areia até a Gamboa fica livre. Pergunte na recepção o melhor horário de hoje.', img:'ilha-gamboa.jpg', tone:'areia'},
+  {t:'Pôr do sol na Toca do Morcego',c:'O ponto clássico para ver o sol cair no Atlântico. Chegue com tempo — enche cedo.', img:'ilha-pordosol.jpg', tone:'pordosol'},
+  {t:'A Terceira e a Quarta',c:'Para mar mais calmo e quieto, a Terceira e a Quarta Praia ficam logo adiante. Vale o passeio de barco ao redor da ilha.', img:'ilha-praias.jpg', tone:'mar'}
+];
+const BAIANA=[
+  {t:'O samba de roda',c:'Patrimônio do Recôncavo, o samba de roda é a batida que atravessa a Bahia. A recepção sabe onde a roda acontece esta semana.', img:'baiana-samba.jpg', tone:'flor'},
+  {t:'O hibisco',c:'A flor que aparece pela casa não é enfeite: é o hibisco baiano, vermelho e franco, como a luz da tarde aqui.', img:'baiana-hibisco.jpg', tone:'flor'},
+  {t:'Acarajé ao entardecer',c:'Dendê, camarão e pimenta a gosto. Um ritual baiano que pede pressa nenhuma — pergunte pelos endereços de confiança.', img:'baiana-acaraje.jpg', tone:'pordosol'},
+  {t:'Ser recebido pelo nome',c:'Aqui, hóspede não é número de quarto. É a diferença entre ser gerenciado e ser reconhecido.', img:'baiana-anfitria.jpg', tone:'casa'}
+];
+let iIlha=0,iBaiana=0;
+function setEditorial(cardId, item, titleId, bodyId){
+  const card=document.getElementById(cardId);
+  document.getElementById(titleId).textContent=item.t;
+  document.getElementById(bodyId).textContent=item.c;
+  const bg=card.querySelector('.ed-bg');
+  if(item.img){
+    bg.style.backgroundImage=`url('${item.img}'), ${toneBg(item.tone)}`;
+    card.classList.add('has-photo');
+  }else{
+    bg.style.backgroundImage='';
+    card.classList.remove('has-photo');
+  }
+}
+function rotateIlha(){ setEditorial('c-ilha', ILHA[iIlha++%ILHA.length], 'ilha-titulo','ilha-corpo'); }
+function rotateBaiana(){ setEditorial('c-baiana', BAIANA[iBaiana++%BAIANA.length], 'baiana-titulo','baiana-corpo'); }
+
+/* =========================================================
+   FOTOS → cards
+   ========================================================= */
+function buildPhotos(){
+  const stage=document.getElementById('stage');
+  const dots=document.getElementById('dots');
+  const ids=[];
+  CONFIG.photos.forEach((p,i)=>{
+    const id='c-foto-'+i;
+    const sec=document.createElement('section');
+    sec.className='card photo-card';sec.id=id;
+    sec.innerHTML=`
+      <div class="photo-bg" style="background-image:url('${p.src}'), ${toneBg(p.tone)}"></div>
+      <div class="photo-ov"></div>
+      <div class="photo-cap">
+        ${p.eyebrow?`<div class="eyebrow">${p.eyebrow}</div>`:''}
+        ${p.frase?`<div class="frase">${p.frase}</div>`:''}
+      </div>`;
+    stage.insertBefore(sec,dots);
+    ids.push(id);
+  });
+  return ids;
+}
+
+/* =========================================================
+   CICLO
+   ========================================================= */
+let ORDER=[];
+const DARK_INFO={'c-abertura':1,'c-tempo':1,'c-baiana':1};
+const isDark=id=>id.indexOf('c-foto-')===0||DARK_INFO[id]
+  ||document.getElementById(id).classList.contains('has-photo');
+let idx=0,dotsEl;
+
+function show(i){
+  ORDER.forEach((id,k)=>{
+    document.getElementById(id).classList.toggle('active',k===i);
+    dotsEl.children[k].classList.toggle('on',k===i);
+  });
+  const id=ORDER[i];
+  if(id==='c-ilha')rotateIlha();
+  if(id==='c-baiana')rotateBaiana();
+  document.getElementById('topbar').className='topbar '+(isDark(id)?'on-dark':'on-light');
+}
+function advance(){ idx=(idx+1)%ORDER.length; show(idx); }
+
+/* =========================================================
+   INIT
+   ========================================================= */
+function boot(){
+  document.querySelectorAll('[data-flor]').forEach(el=>el.innerHTML=FLOR_SVG);
+
+  const INFO=['c-abertura','c-mare','c-tempo','c-ilha','c-baiana'];
+  const fotos=buildPhotos();
+  ORDER=[];let p=0;
+  INFO.forEach(id=>{ORDER.push(id); if(p<fotos.length)ORDER.push(fotos[p++]);});
+  while(p<fotos.length)ORDER.push(fotos[p++]);
+
+  dotsEl=document.getElementById('dots');dotsEl.innerHTML='';
+  ORDER.forEach((_,i)=>{const d=document.createElement('div');
+    d.className='dot'+(i===0?' on':'');dotsEl.appendChild(d);});
+
+  tickClock(); setInterval(tickClock,30000);
+  renderWeather(CONFIG.demoWeather);
+  loadWeather(); setInterval(loadWeather,3600000);
+  loadTide();   setInterval(loadTide,6*3600000);
+  rotateIlha(); rotateBaiana();
+
+  show(0);
+  setInterval(advance, CONFIG.cardSeconds*1000);
+}
+boot();
+</script>
+</body>
+</html>
