@@ -107,20 +107,27 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden}
 #wordmark-slot .wm{width:13em;height:auto;display:block}
 
 /* ---------- 2 · Maré ---------- */
-#c-mare .mare-grid{display:flex;gap:4.4em;margin-top:.4em}
-.mare-col{display:flex;flex-direction:column}
-.mare-tag{font-family:var(--util);font-weight:300;font-size:.66em;letter-spacing:.34em;
-  text-transform:uppercase;color:var(--terracota);display:flex;align-items:center;
-  gap:.6em;margin-bottom:.5em}
-.mare-tag .arrow{font-size:1.1em;line-height:1}
-.mare-hora{font-family:var(--display);font-style:italic;font-weight:300;font-size:3.7em;
+#c-mare{padding:0}
+.mare-wrap{width:100%;height:100%;padding:0 7em;display:flex;flex-direction:column;
+  justify-content:center;position:relative;z-index:2}
+.mare-wrap .eyebrow{text-align:center;margin-bottom:.2em}
+.mare-grid{display:flex;width:100%;margin-top:1.4em}
+.mare-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:.5em;
+  padding:0 1.5em;position:relative}
+.mare-col + .mare-col::before{content:'';position:absolute;left:0;top:8%;height:84%;
+  width:1px;background:rgba(176,90,48,.18)}
+.mare-tag{font-family:var(--util);font-weight:300;font-size:.64em;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--terracota);display:flex;align-items:center;gap:.5em}
+.mare-tag .arrow{font-size:1.15em;line-height:1}
+.mare-hora{font-family:var(--display);font-style:italic;font-weight:300;font-size:4.4em;
   line-height:1;color:var(--ebano)}
-.mare-alt{font-family:var(--util);font-weight:300;font-size:.7em;letter-spacing:.12em;
-  color:var(--cinza);margin-top:.3em}
-.mare-nota{font-family:var(--display);font-style:italic;font-size:1.5em;
-  color:var(--terra-escuro);margin-top:1.9em;max-width:24em;line-height:1.35}
+.mare-alt{font-family:var(--util);font-weight:300;font-size:.66em;letter-spacing:.18em;
+  color:var(--cinza)}
+.mare-nota{font-family:var(--display);font-style:italic;font-size:1.6em;color:var(--terra-escuro);
+  margin-top:2.6em;max-width:32em;line-height:1.35;text-align:center;align-self:center}
 .mare-fonte{font-family:var(--util);font-weight:200;font-size:.5em;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--cinza);position:absolute;bottom:2.4em;left:7em}
+  text-transform:uppercase;color:var(--cinza);position:absolute;bottom:2.4em;left:0;right:0;
+  text-align:center}
 
 /* ---------- 3 · Tempo ---------- */
 #c-tempo{padding:0}
@@ -222,9 +229,11 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden}
   <!-- 2 · MARÉ -->
   <section class="card cream" id="c-mare">
     <div class="flor" style="width:30em;height:30em;left:-7em;top:-8em;opacity:.06" data-flor></div>
-    <div class="eyebrow">A maré hoje</div>
-    <div class="mare-grid" id="mare-grid"></div>
-    <div class="mare-nota" id="mare-nota">As piscinas naturais aparecem na maré baixa — o melhor momento para o banho.</div>
+    <div class="mare-wrap">
+      <div class="eyebrow">A maré hoje</div>
+      <div class="mare-grid" id="mare-grid"></div>
+      <div class="mare-nota" id="mare-nota">As piscinas naturais aparecem na maré baixa — o melhor momento para o banho.</div>
+    </div>
     <div class="mare-fonte" id="mare-fonte">Referência Marinha do Brasil · não use para navegação</div>
   </section>
 
