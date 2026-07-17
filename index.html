@@ -29,7 +29,7 @@
 html,body{width:100%;height:100%;background:#000;overflow:hidden}
 #stage{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
 width:min(100vw,177.78vh);height:min(56.25vw,100vh);background:var(--creme);overflow:hidden;
-font-size:clamp(13px,1.82vw,36px)}
+font-size:calc(min(100vw,177.78vh)/56)}
 .topbar{position:absolute;top:0;left:0;right:0;height:3.2em;z-index:50;display:flex;align-items:center;
 justify-content:space-between;padding:0 2.6em;pointer-events:none}
 .handle{font-family:var(--util);font-weight:300;font-size:.7em;letter-spacing:.42em;text-transform:uppercase;color:var(--verde)}
@@ -54,33 +54,41 @@ margin-bottom:1.4em;color:var(--terracota)}
 
 /* C2 maré dashboard */
 #C2{padding:0}
-.mare-wrap{width:100%;height:100%;padding:2em 5em 0;display:flex;flex-direction:column;position:relative;z-index:2}
-.mare-wrap .eyebrow{text-align:center;margin-bottom:.5em}
-.mare-estado{display:flex;align-items:baseline;justify-content:center;gap:1em;margin-bottom:.1em}
-.est-dir{font-family:var(--display);font-style:italic;font-weight:300;font-size:3.1em;line-height:1;color:var(--terracota)}
-.est-info{font-family:var(--util);font-weight:300;font-size:.72em;letter-spacing:.22em;text-transform:uppercase;color:var(--cinza)}
-.mare-chart{flex:1;min-height:0;display:flex}
-.tide-svg{width:100%;height:100%}
-.tide-svg text{font-family:var(--util);font-weight:300}
-.tide-svg .ax{font-size:19px;fill:var(--cinza);letter-spacing:1px}
-.tide-svg .now{font-size:20px;fill:var(--ebano);letter-spacing:2px;text-transform:uppercase}
-.tide-svg .pool{font-size:18px;fill:var(--verde);letter-spacing:3px;text-transform:uppercase}
-.mare-linha{display:flex;justify-content:space-between;gap:.6em;padding:.7em 0 0}
-.mtide{flex:1;display:flex;flex-direction:column;align-items:center;gap:.2em;position:relative;transition:all .4s}
-.mtide+.mtide::before{content:'';position:absolute;left:0;top:16%;height:64%;width:1px;background:rgba(176,90,48,.14)}
-.mt-tag{font-family:var(--util);font-weight:300;font-size:.58em;letter-spacing:.2em;text-transform:uppercase}
-.mt-hora{font-family:var(--display);font-style:italic;font-weight:300;line-height:1}
-.mt-alt{font-family:var(--util);font-weight:300;font-size:.6em;letter-spacing:.14em;color:var(--cinza)}
-.mtide.passada{opacity:.38}
-.mtide.passada .mt-hora{font-size:2em;color:var(--cinza)}
-.mtide.passada .mt-tag{color:var(--cinza)}
-.mtide.futura{opacity:.9}
-.mtide.futura .mt-hora{font-size:2.5em;color:var(--terra-escuro)}
-.mtide.futura .mt-tag{color:var(--terra-escuro)}
-.mtide.proxima .mt-hora{font-size:3.5em;color:var(--terracota)}
-.mtide.proxima .mt-tag{color:var(--terracota)}
-.mt-prox{font-family:var(--util);font-weight:400;font-size:.5em;letter-spacing:.3em;text-transform:uppercase;color:var(--terracota);margin-top:.15em}
-.mare-fonte{text-align:center;font-family:var(--util);font-weight:300;font-size:.52em;letter-spacing:.2em;text-transform:uppercase;color:var(--cinza);padding:.7em 0 1.3em}
+#C2 .dash{position:absolute;inset:0;display:flex;flex-direction:column;padding:2.5em 4em 1em;z-index:2}
+#C2 .dash .eyebrow{text-align:center;margin-bottom:.7em}
+#C2 .top{display:flex;gap:1em;align-items:stretch;margin-bottom:.8em;min-width:0}
+#C2 .hero{flex:1.3;min-width:0;display:flex;align-items:center;gap:1.2em;background:var(--areia);border-radius:18px;padding:.45em 1.4em}
+#C2 .hero-state{font-family:var(--display);font-style:italic;font-weight:300;font-size:3em;line-height:1;color:var(--terracota);white-space:nowrap}
+#C2 .hero-sep{width:1px;align-self:stretch;background:rgba(125,58,31,.22);margin:.5em 0}
+#C2 .hero-r{display:flex;flex-direction:column;align-items:flex-start;gap:.03em}
+#C2 .hero-lbl{font-family:var(--util);font-weight:300;font-size:.58em;letter-spacing:.26em;text-transform:uppercase;color:var(--cinza)}
+#C2 .hero-time{font-family:var(--display);font-style:italic;font-weight:300;font-size:2.4em;line-height:1.05;color:var(--terra-escuro)}
+#C2 .hero-now{font-family:var(--util);font-weight:300;font-size:.58em;letter-spacing:.2em;text-transform:uppercase;color:var(--cinza);margin-top:.25em}
+#C2 .widgets{flex:1;min-width:0;display:flex;gap:.9em}
+#C2 .mini{flex:1;min-width:0;display:flex;align-items:center;gap:.7em;background:var(--creme);border:1px solid var(--terra-palido);border-radius:16px;padding:.45em .85em}
+#C2 .mini-ico{width:1.9em;height:1.9em;flex:0 0 auto}
+#C2 .mini-ico svg{width:100%;height:100%;display:block}
+#C2 .mini-lbl{font-family:var(--util);font-weight:300;font-size:.5em;letter-spacing:.28em;text-transform:uppercase;color:var(--cinza);margin-bottom:.15em}
+#C2 .mini-val{font-family:var(--display);font-style:italic;font-weight:300;font-size:1.25em;line-height:1.04;color:var(--terra-escuro)}
+#C2 .mini-sub{font-family:var(--util);font-weight:300;font-size:.5em;letter-spacing:.22em;text-transform:uppercase;color:var(--terracota);margin-top:.22em}
+#C2 .mare-linha{display:flex;justify-content:space-between;gap:.6em;margin-bottom:.7em}
+#C2 .mtide{flex:1;display:flex;flex-direction:column;align-items:center;gap:.12em;position:relative}
+#C2 .mtide+.mtide::before{content:'';position:absolute;left:0;top:18%;height:60%;width:1px;background:rgba(176,90,48,.14)}
+#C2 .mt-tag{font-family:var(--util);font-weight:300;font-size:.55em;letter-spacing:.2em;text-transform:uppercase}
+#C2 .mt-hora{font-family:var(--display);font-style:italic;font-weight:300;line-height:1}
+#C2 .mt-alt{font-family:var(--util);font-weight:300;font-size:.55em;letter-spacing:.14em;color:var(--cinza)}
+#C2 .mtide.passada{opacity:.36}#C2 .mtide.passada .mt-hora{font-size:1.9em;color:var(--cinza)}#C2 .mtide.passada .mt-tag{color:var(--cinza)}
+#C2 .mtide.futura{opacity:.9}#C2 .mtide.futura .mt-hora{font-size:2.3em;color:var(--terra-escuro)}#C2 .mtide.futura .mt-tag{color:var(--terra-escuro)}
+#C2 .mtide.proxima .mt-hora{font-size:3em;color:var(--terracota)}#C2 .mtide.proxima .mt-tag{color:var(--terracota)}
+#C2 .mt-prox{font-family:var(--util);font-weight:400;font-size:.46em;letter-spacing:.3em;text-transform:uppercase;color:var(--terracota);margin-top:.1em}
+#C2 .graph-panel{flex:1;min-height:7em;background:var(--terra-escuro);border-radius:18px;padding:.8em 1.4em .4em;display:flex;overflow:hidden}
+#C2 .mare-chart{flex:1;min-height:0;display:flex}
+#C2 .tide-svg{width:100%;height:100%}
+#C2 .tide-svg text{font-family:var(--util);font-weight:300}
+#C2 .tide-svg .ax{font-size:19px;fill:#EDC5B0;fill-opacity:.75;letter-spacing:1px}
+#C2 .tide-svg .now{font-size:19px;fill:#FAF5EE;letter-spacing:2px;text-transform:uppercase}
+#C2 .tide-svg .pool{font-size:17px;fill:#A8C5BC;letter-spacing:3px;text-transform:uppercase}
+#C2 .mare-fonte{text-align:center;font-family:var(--util);font-weight:300;font-size:.5em;letter-spacing:.2em;text-transform:uppercase;color:var(--cinza);padding-top:.55em}
 
 /* C4 tempo */
 #C4{padding:0}
@@ -148,11 +156,25 @@ margin-bottom:1.4em;color:var(--terracota)}
 
   <!-- 2 · DASHBOARD MARÉ -->
   <section class="card cream" id="C2">
-    <div class="mare-wrap">
+    <div class="dash">
       <div class="eyebrow">A maré hoje</div>
-      <div class="mare-estado" id="C2-estado"></div>
-      <div class="mare-chart" id="C2-chart"></div>
-      <div class="mare-linha" id="C2-linha"></div>
+      <div class="top">
+        <div class="hero">
+          <div class="hero-state" id="h-state">Enchendo ↑</div>
+          <div class="hero-sep"></div>
+          <div class="hero-r"><div class="hero-lbl" id="h-lbl">preia-mar às</div>
+            <div class="hero-time" id="h-time">—</div>
+            <div class="hero-now" id="h-now">—</div></div>
+        </div>
+        <div class="widgets">
+          <div class="mini"><div class="mini-ico" id="moon-ico"></div>
+            <div><div class="mini-lbl">Lua</div><div class="mini-val" id="moon-name">—</div><div class="mini-sub" id="moon-mare">—</div></div></div>
+          <div class="mini"><div class="mini-ico" id="amp-ico"></div>
+            <div><div class="mini-lbl">Amplitude</div><div class="mini-val" id="amp-val">—</div><div class="mini-sub">variação do dia</div></div></div>
+        </div>
+      </div>
+      <div class="mare-linha" id="linha"></div>
+      <div class="graph-panel"><div class="mare-chart" id="chart"></div></div>
       <div class="mare-fonte" id="C2-fonte">Tábua de marés · Morro de São Paulo · não use para navegação</div>
     </div>
   </section>
@@ -259,7 +281,7 @@ const CONFIG={lat:-13.3817,lng:-38.9139,tz:'America/Bahia',tideApiKey:'',
  demoWeather:{temp:28,code:2,humidity:78,wind:14,sunrise:'05:34',sunset:'17:42',
   daily:[{code:1,max:29,min:24},{code:2,max:28,min:24},{code:80,max:27,min:23}]}};
 const ORDER=['C1','C2','C3','C11','C4','C5','C6','C7','C8','C10','C9'];
-const DUR={C1:9,C2:22,C3:8,C4:13,C5:8,C6:12,C7:13,C8:10,C10:12,C11:12,C9:8};
+const DUR={C1:9,C2:28,C3:8,C4:13,C5:8,C6:12,C7:13,C8:10,C10:12,C11:12,C9:8};
 const DARK=['C3','C5','C6','C7','C9','C10','C11'];
 
 /* fotos */
@@ -310,6 +332,12 @@ function tick(){const a=agora();document.getElementById('clock').textContent=a.h
 /* ===== MARÉ ===== */
 let TIDE={};const CK='dm_tide_v2';
 function evList(k){const l=TIDE[k];if(!l)return null;return l.map(e=>({m:hhmm2min(e.time),h:e.height,type:e.type,time:e.time}));}
+function moonPhase(d){const syn=29.530588853;const ref=Date.UTC(2000,0,6,18,14);let x=((d.getTime()-ref)/86400000)%syn;if(x<0)x+=syn;return x/syn;}
+function moonName(p){const n=['Lua nova','Lua crescente','Quarto crescente','Crescente gibosa','Lua cheia','Minguante gibosa','Quarto minguante','Lua minguante'];return n[Math.floor((p*8)+0.5)%8];}
+function moonSVG(p){const C=40,R=32,b=Math.cos(p*2*Math.PI),wax=p<0.5,lit='#B05A30',dk='#e6d4bb',half=wax?C:C-R,ef=b>0?dk:lit,rx=Math.abs(b)*R;
+ return `<svg viewBox="0 0 80 80"><clipPath id="mc"><circle cx="${C}" cy="${C}" r="${R}"/></clipPath><g clip-path="url(#mc)"><rect x="${C-R}" y="${C-R}" width="${2*R}" height="${2*R}" fill="${dk}"/><rect x="${half}" y="${C-R}" width="${R}" height="${2*R}" fill="${lit}"/><ellipse cx="${C}" cy="${C}" rx="${rx.toFixed(2)}" ry="${R}" fill="${ef}"/></g><circle cx="${C}" cy="${C}" r="${R}" fill="none" stroke="#7D3A1F" stroke-opacity="0.3"/></svg>`;}
+function mareForca(p){const s=Math.abs(Math.cos(p*2*Math.PI));return s>0.66?'Maré viva':(s>0.33?'Maré média':'Maré morta');}
+const AMP_ICO=`<svg viewBox="0 0 48 48" fill="none" stroke="#B05A30" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M24 9v30"/><path d="M16 16l8-8 8 8"/><path d="M16 32l8 8 8-8"/></svg>`;
 function tidePoints(){
  const list=evList(diaISO())||CONFIG.tideFallback.map(e=>({m:hhmm2min(e.time),h:e.height,type:e.type,time:e.time}));
  let pts=[];const y=evList(diaISO(new Date(Date.now()-864e5)));if(y&&y.length)pts.push({m:y[y.length-1].m-1440,h:y[y.length-1].h});
@@ -317,43 +345,41 @@ function tidePoints(){
  const tm=evList(diaISO(new Date(Date.now()+864e5)));if(tm&&tm.length)pts.push({m:tm[0].m+1440,h:tm[0].h});
  return {list,pts};}
 function heightAt(pts,m){if(m<=pts[0].m)return pts[0].h;if(m>=pts[pts.length-1].m)return pts[pts.length-1].h;
- for(let i=0;i<pts.length-1;i++)if(m>=pts[i].m&&m<=pts[i+1].m){const t=(m-pts[i].m)/(pts[i+1].m-pts[i].m);
-  return pts[i].h+(pts[i+1].h-pts[i].h)*(1-Math.cos(Math.PI*t))/2;}return pts[0].h;}
+ for(let i=0;i<pts.length-1;i++)if(m>=pts[i].m&&m<=pts[i+1].m){const t=(m-pts[i].m)/(pts[i+1].m-pts[i].m);return pts[i].h+(pts[i+1].h-pts[i].h)*(1-Math.cos(Math.PI*t))/2;}return pts[0].h;}
 function tideChart(list,pts){
- const W=1200,H=360,padL=64,padR=64,padT=46,padB=52;
+ const W=1200,H=300,padL=60,padR=60,padT=40,padB=44;
  const hs=list.map(e=>e.h);let hmin=Math.min(...hs),hmax=Math.max(...hs);const p=(hmax-hmin)*0.28||0.5;hmin-=p;hmax+=p;
  const X=m=>padL+(m/1440)*(W-padL-padR),Y=h=>padT+(1-(h-hmin)/(hmax-hmin))*(H-padT-padB);
- let d='';for(let m=0;m<=1440;m+=8){d+=(m?'L':'M')+X(m).toFixed(1)+' '+Y(heightAt(pts,m)).toFixed(1)+' ';}
+ let d='';for(let m=0;m<=1440;m+=8)d+=(m?'L':'M')+X(m).toFixed(1)+' '+Y(heightAt(pts,m)).toFixed(1)+' ';
  const area=d+`L ${X(1440).toFixed(1)} ${H-padB} L ${X(0).toFixed(1)} ${H-padB} Z`;
- let bands='';list.filter(e=>e.type==='low').forEach(e=>{const x1=X(Math.max(0,e.m-90)),x2=X(Math.min(1440,e.m+90));
-  bands+=`<rect x="${x1.toFixed(1)}" y="${padT}" width="${(x2-x1).toFixed(1)}" height="${H-padT-padB}" fill="#2E5E52" opacity="0.10"/>`;});
- let axis='';[0,6,12,18,24].forEach(hh=>{const x=X(hh*60);axis+=`<line x1="${x}" y1="${padT}" x2="${x}" y2="${H-padB}" stroke="#7D3A1F" stroke-opacity="0.08"/>`;
-  axis+=`<text x="${x}" y="${H-padB+30}" text-anchor="middle" class="ax">${String(hh).padStart(2,'0')}h</text>`;});
- let dots='';list.forEach(e=>{dots+=`<circle cx="${X(e.m)}" cy="${Y(e.h)}" r="5" fill="#B05A30"/>`;});
+ let bands='';list.filter(e=>e.type==='low').forEach(e=>{const x1=X(Math.max(0,e.m-90)),x2=X(Math.min(1440,e.m+90));bands+=`<rect x="${x1.toFixed(1)}" y="${padT}" width="${(x2-x1).toFixed(1)}" height="${H-padT-padB}" fill="#A8C5BC" opacity="0.14"/>`;});
+ let axis='';[0,6,12,18,24].forEach(hh=>{const x=X(hh*60);axis+=`<line x1="${x}" y1="${padT}" x2="${x}" y2="${H-padB}" stroke="#F0E0CC" stroke-opacity="0.10"/><text x="${x}" y="${H-padB+26}" text-anchor="middle" class="ax">${String(hh).padStart(2,'0')}h</text>`;});
+ let dots='';list.forEach(e=>dots+=`<circle cx="${X(e.m)}" cy="${Y(e.h)}" r="5" fill="#F0E0CC"/>`);
  const a=agora(),ax=X(a.min),ah=heightAt(pts,a.min),ay=Y(ah);
- const now=`<line x1="${ax}" y1="${padT-4}" x2="${ax}" y2="${H-padB}" stroke="#1E1510" stroke-dasharray="3 5" stroke-opacity="0.5"/>
-  <circle cx="${ax}" cy="${ay}" r="9" fill="#1E1510"/><text x="${ax}" y="${padT-14}" text-anchor="middle" class="now">agora · ${ah.toFixed(1).replace('.',',')} m</text>`;
- let pool='';const fl=list.find(e=>e.type==='low');if(fl)pool=`<text x="${X(fl.m)}" y="${padT+22}" text-anchor="middle" class="pool">piscinas naturais</text>`;
- return `<svg viewBox="0 0 ${W} ${H}" class="tide-svg" preserveAspectRatio="xMidYMid meet">
-  <defs><linearGradient id="tg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B05A30" stop-opacity="0.26"/><stop offset="1" stop-color="#B05A30" stop-opacity="0.02"/></linearGradient></defs>
-  ${bands}${axis}<path d="${area}" fill="url(#tg)"/><path d="${d}" fill="none" stroke="#B05A30" stroke-width="4" stroke-linejoin="round"/>${pool}${dots}${now}</svg>`;}
+ const now=`<line x1="${ax}" y1="${padT-2}" x2="${ax}" y2="${H-padB}" stroke="#FAF5EE" stroke-dasharray="3 5" stroke-opacity="0.55"/><circle cx="${ax}" cy="${ay}" r="8" fill="#FAF5EE"/><text x="${ax}" y="${padT-12}" text-anchor="middle" class="now">agora</text>`;
+ let pool='';const fl=list.find(e=>e.type==='low');if(fl)pool=`<text x="${X(fl.m)}" y="${padT+18}" text-anchor="middle" class="pool">piscinas naturais</text>`;
+ return `<svg viewBox="0 0 ${W} ${H}" class="tide-svg" preserveAspectRatio="xMidYMid meet"><defs><linearGradient id="tg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D4896A" stop-opacity="0.34"/><stop offset="1" stop-color="#D4896A" stop-opacity="0.03"/></linearGradient></defs>${bands}${axis}<path d="${area}" fill="url(#tg)"/><path d="${d}" fill="none" stroke="#D4896A" stroke-width="4" stroke-linejoin="round"/>${pool}${dots}${now}</svg>`;}
 function proximaVirada(list){const a=agora();const fut=list?list.filter(e=>e.m>=a.min):[];
  if(fut.length)return fut[0];const tm=evList(diaISO(new Date(Date.now()+864e5)));if(tm&&tm.length)return tm[0];return list?list[0]:null;}
 function renderC2(){
  const {list,pts}=tidePoints();const a=agora();
- const hNow=heightAt(pts,a.min);const prox=proximaVirada(list);
- const enchendo=prox&&prox.type==='high';
- document.getElementById('C2-estado').innerHTML=
-  `<span class="est-dir">${enchendo?'Enchendo ↑':'Secando ↓'}</span>`
-  +`<span class="est-info">agora ${hNow.toFixed(1).replace('.',',')} m${prox?'   ·   '+(prox.type==='high'?'preia-mar':'baixa-mar')+' às '+prox.time:''}</span>`;
- document.getElementById('C2-chart').innerHTML=tideChart(list,pts);
- let proxSet=false;
- document.getElementById('C2-linha').innerHTML=list.map(e=>{
-  let cls;if(e.m<a.min)cls='passada';else if(!proxSet){cls='proxima';proxSet=true;}else cls='futura';
-  const alta=e.type==='high';
-  return `<div class="mtide ${cls}"><div class="mt-tag">${alta?'↑ Preia-mar':'↓ Baixa-mar'}</div>`
-   +`<div class="mt-hora">${e.time}</div><div class="mt-alt">${e.h.toFixed(1).replace('.',',')} m</div>`
-   +`${cls==='proxima'?'<div class="mt-prox">próxima</div>':''}</div>`;}).join('');}
+ const hNow=heightAt(pts,a.min);const prox=proximaVirada(list);const ench=prox&&prox.type==='high';
+ document.getElementById('h-state').textContent=ench?'Enchendo ↑':'Secando ↓';
+ document.getElementById('h-lbl').textContent=(ench?'preia-mar':'baixa-mar')+' às';
+ document.getElementById('h-time').textContent=prox?prox.time:'—';
+ document.getElementById('h-now').textContent='agora · '+hNow.toFixed(1).replace('.',',')+' m';
+ const mp=moonPhase(new Date());
+ document.getElementById('moon-ico').innerHTML=moonSVG(mp);
+ document.getElementById('moon-name').textContent=moonName(mp);
+ document.getElementById('moon-mare').textContent=mareForca(mp);
+ const amp=Math.max(...list.map(e=>e.h))-Math.min(...list.map(e=>e.h));
+ document.getElementById('amp-ico').innerHTML=AMP_ICO;
+ document.getElementById('amp-val').textContent=amp.toFixed(1).replace('.',',')+' m';
+ let ps=false;
+ document.getElementById('linha').innerHTML=list.map(e=>{let cls;if(e.m<a.min)cls='passada';else if(!ps){cls='proxima';ps=true;}else cls='futura';const alta=e.type==='high';
+  return `<div class="mtide ${cls}"><div class="mt-tag">${alta?'↑ Preia-mar':'↓ Baixa-mar'}</div><div class="mt-hora">${e.time}</div><div class="mt-alt">${e.h.toFixed(1).replace('.',',')} m</div>${cls==='proxima'?'<div class="mt-prox">próxima</div>':''}</div>`;}).join('');
+ document.getElementById('chart').innerHTML=tideChart(list,pts);
+}
 
 async function loadTide(){const hoje=diaISO();
  try{const r=await fetch('mares.json',{cache:'no-store'});if(r.ok){const j=await r.json();if(j[hoje]){TIDE=j;renderC2();
