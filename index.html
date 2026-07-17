@@ -390,6 +390,7 @@ function showQuar(){setBg('C5-bg',QUAR[pickQ()],TONE.quar);}
 function showBahia(){const b=BAHIA[pickB()];setBg('C9-bg',b.i,TONE.bahia);document.getElementById('C9-cap').textContent=b.c;}
 function showGer(){setBg('C10-bg','noite-casa.jpg','linear-gradient(120deg,#7D3A1F 0%,#1A3D35 55%,#1E1510 100%)');}
 function showPraia(){setBg('C11-bg','praia-servico.jpg','linear-gradient(120deg,#EDC5B0 0%,#D4896A 40%,#1E1510 100%)');}
+function showAgua(){setBg('C6-bg','agua-piscina.jpg','linear-gradient(120deg,#A8C5BC 0%,#2E5E52 55%,#1E1510 100%)');}
 function showDica(){const d=DICAS[pickD()];setBg('C7-bg',d.i,TONE.dica);document.getElementById('C7-tit').textContent=d.t;document.getElementById('C7-corpo').textContent=d.c;}
 
 /* ===== CICLO ===== */
@@ -397,13 +398,13 @@ let idx=0,timer=null,dotsEl;
 function show(i){ORDER.forEach((id,k)=>document.getElementById(id).classList.toggle('active',k===i));
  [...dotsEl.children].forEach((d,k)=>d.classList.toggle('on',k===i));
  const id=ORDER[i];document.getElementById('topbar').className='topbar'+(DARK.includes(id)?' on-dark':'');
- if(id==='C2')renderC2();if(id==='C3')showPisc();if(id==='C5')showQuar();if(id==='C7')showDica();if(id==='C9')showBahia();if(id==='C10')showGer();if(id==='C11')showPraia();
+ if(id==='C2')renderC2();if(id==='C3')showPisc();if(id==='C5')showQuar();if(id==='C7')showDica();if(id==='C9')showBahia();if(id==='C10')showGer();if(id==='C11')showPraia();if(id==='C6')showAgua();
  clearTimeout(timer);timer=setTimeout(next,(DUR[id]||11)*1000);}
 function next(){idx=(idx+1)%ORDER.length;show(idx);}
 function boot(){document.querySelectorAll('[data-flor]').forEach(e=>e.innerHTML=FLOR);
  dotsEl=document.getElementById('dots');dotsEl.innerHTML='';ORDER.forEach((_,i)=>{const d=document.createElement('div');d.className='dot'+(i===0?' on':'');dotsEl.appendChild(d);});
  tick();setInterval(tick,30000);renderC4(CONFIG.demoWeather);loadWeather();setInterval(loadWeather,36e5);
- loadTide();setInterval(loadTide,36e5);showPisc();showQuar();showBahia();showDica();showGer();showPraia();show(0);}
+ loadTide();setInterval(loadTide,36e5);showPisc();showQuar();showBahia();showDica();showGer();showPraia();showAgua();show(0);}
 boot();
 
 </script>
