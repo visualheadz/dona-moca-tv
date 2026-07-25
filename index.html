@@ -90,6 +90,26 @@ margin-bottom:1.4em;color:var(--terracota)}
 #C2 .tide-svg .pool{font-size:17px;fill:#A8C5BC;letter-spacing:3px;text-transform:uppercase}
 #C2 .mare-fonte{text-align:center;font-family:var(--util);font-weight:300;font-size:.5em;letter-spacing:.2em;text-transform:uppercase;color:var(--cinza);padding-top:.55em}
 
+/* C12 maré amanhã */
+#C12{padding:0}
+#C12 .wrap{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 7em;z-index:2}
+#C12 .flor2{position:absolute;left:-11em;bottom:-13em;width:40em;height:40em;color:var(--terracota);opacity:.05;z-index:1}
+#C12 .flor2 svg{width:100%;height:100%;display:block}
+#C12 .am-eyebrow{font-family:var(--util);font-weight:300;font-size:.72em;letter-spacing:.46em;text-transform:uppercase;color:var(--terracota);margin-bottom:.5em}
+#C12 .am-dia{font-family:var(--display);font-style:italic;font-weight:300;font-size:1.7em;color:var(--cinza);margin-bottom:1.3em;text-transform:capitalize}
+#C12 .am-tides{display:flex;align-items:flex-start;gap:0}
+#C12 .am-t{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:.4em;padding:0 3em;position:relative}
+#C12 .am-t+.am-t::before{content:'';position:absolute;left:0;top:14%;height:72%;width:1px;background:rgba(176,90,48,.18)}
+#C12 .am-tag{font-family:var(--util);font-weight:300;font-size:.72em;letter-spacing:.28em;text-transform:uppercase;display:flex;align-items:center;gap:.4em}
+#C12 .am-hora{font-family:var(--display);font-style:italic;font-weight:300;font-size:5.2em;line-height:1}
+#C12 .am-alt{font-family:var(--util);font-weight:300;font-size:.72em;letter-spacing:.16em;color:var(--cinza)}
+#C12 .am-t.alta .am-tag,#C12 .am-t.alta .am-hora{color:var(--terracota)}
+#C12 .am-t.baixa .am-tag,#C12 .am-t.baixa .am-hora{color:var(--terra-escuro)}
+#C12 .am-curve{width:46em;max-width:82%;margin-top:1.6em}
+#C12 .am-curve svg{width:100%;height:auto;display:block}
+#C12 .am-curve .ax{font-family:var(--util);font-weight:300;font-size:20px;fill:var(--cinza);letter-spacing:1px}
+#C12 .am-fonte{position:absolute;bottom:2.6em;left:0;right:0;text-align:center;font-family:var(--util);font-weight:300;font-size:.54em;letter-spacing:.2em;text-transform:uppercase;color:var(--cinza)}
+
 /* C4 tempo */
 #C4{padding:0}
 .tempo-wrap{display:flex;align-items:center;justify-content:space-between;width:100%;height:100%;padding:0 7em;gap:4em;position:relative;z-index:2}
@@ -176,6 +196,18 @@ margin-bottom:1.4em;color:var(--terracota)}
       <div class="mare-linha" id="linha"></div>
       <div class="graph-panel"><div class="mare-chart" id="chart"></div></div>
       <div class="mare-fonte" id="C2-fonte">Tábua de marés · Morro de São Paulo · não use para navegação</div>
+    </div>
+  </section>
+
+  <!-- 12 · MARÉ AMANHÃ -->
+  <section class="card cream" id="C12">
+    <div class="flor2" data-flor></div>
+    <div class="wrap">
+      <div class="am-eyebrow">A maré amanhã</div>
+      <div class="am-dia" id="C12-dia">—</div>
+      <div class="am-tides" id="C12-tides"></div>
+      <div class="am-curve" id="C12-curve"></div>
+      <div class="am-fonte">Tábua de marés · Morro de São Paulo · não use para navegação</div>
     </div>
   </section>
 
@@ -280,8 +312,8 @@ const CONFIG={lat:-13.3817,lng:-38.9139,tz:'America/Bahia',tideApiKey:'',
   {type:'low',time:'17:18',height:0.4},{type:'high',time:'23:30',height:2.0}],
  demoWeather:{temp:28,code:2,humidity:78,wind:14,sunrise:'05:34',sunset:'17:42',
   daily:[{code:1,max:29,min:24},{code:2,max:28,min:24},{code:80,max:27,min:23}]}};
-const ORDER=['C1','C2','C3','C11','C4','C5','C6','C7','C8','C10','C9'];
-const DUR={C1:9,C2:28,C3:8,C4:13,C5:8,C6:12,C7:13,C8:10,C10:12,C11:12,C9:8};
+const ORDER=['C1','C2','C12','C3','C11','C4','C5','C6','C7','C8','C10','C9'];
+const DUR={C1:9,C2:28,C12:12,C3:8,C4:13,C5:8,C6:12,C7:13,C8:10,C10:12,C11:12,C9:8};
 const DARK=['C3','C5','C6','C7','C9','C10','C11'];
 
 /* fotos */
@@ -381,6 +413,26 @@ function renderC2(){
  document.getElementById('chart').innerHTML=tideChart(list,pts);
 }
 
+function miniChartAmanha(list){
+ const W=1200,H=210,padL=40,padR=40,padT=30,padB=36;
+ const pts=list.map(e=>({m:e.m,h:e.h}));
+ const hs=pts.map(x=>x.h);let hmin=Math.min(...hs),hmax=Math.max(...hs);const pd=(hmax-hmin)*0.3||0.5;hmin-=pd;hmax+=pd;
+ const X=m=>padL+(m/1440)*(W-padL-padR),Y=h=>padT+(1-(h-hmin)/(hmax-hmin))*(H-padT-padB);
+ function hAt(m){if(m<=pts[0].m)return pts[0].h;if(m>=pts[pts.length-1].m)return pts[pts.length-1].h;for(let i=0;i<pts.length-1;i++)if(m>=pts[i].m&&m<=pts[i+1].m){const t=(m-pts[i].m)/(pts[i+1].m-pts[i].m);return pts[i].h+(pts[i+1].h-pts[i].h)*(1-Math.cos(Math.PI*t))/2;}return pts[0].h;}
+ let d='';for(let m=0;m<=1440;m+=10)d+=(m?'L':'M')+X(m).toFixed(1)+' '+Y(hAt(m)).toFixed(1)+' ';
+ const area=d+`L ${X(1440).toFixed(1)} ${H-padB} L ${X(0).toFixed(1)} ${H-padB} Z`;
+ let ticks='';[0,6,12,18,24].forEach(hh=>{const x=X(hh*60);ticks+=`<text x="${x}" y="${H-6}" text-anchor="middle" class="ax">${String(hh).padStart(2,'0')}h</text>`;});
+ let dots='';pts.forEach(pt=>dots+=`<circle cx="${X(pt.m)}" cy="${Y(pt.h)}" r="6" fill="#B05A30"/>`);
+ return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet"><defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B05A30" stop-opacity="0.24"/><stop offset="1" stop-color="#B05A30" stop-opacity="0.02"/></linearGradient></defs><path d="${area}" fill="url(#ga)"/><path d="${d}" fill="none" stroke="#B05A30" stroke-width="4" stroke-linejoin="round"/>${dots}${ticks}</svg>`;}
+function renderC12(){
+ const amanha=new Date(Date.now()+864e5);
+ document.getElementById('C12-dia').textContent=fmt({weekday:'long',day:'numeric',month:'long'}).format(amanha);
+ const list=evList(diaISO(amanha))||CONFIG.tideFallback.map(e=>({m:hhmm2min(e.time),h:e.height,type:e.type,time:e.time}));
+ document.getElementById('C12-tides').innerHTML=list.map(e=>{const alta=e.type==='high';
+  return `<div class="am-t ${alta?'alta':'baixa'}"><div class="am-tag">${alta?'↑':'↓'} ${alta?'Preia-mar':'Baixa-mar'}</div><div class="am-hora">${e.time}</div><div class="am-alt">${e.h.toFixed(1).replace('.',',')} m</div></div>`;}).join('');
+ document.getElementById('C12-curve').innerHTML=miniChartAmanha(list);
+}
+
 async function loadTide(){const hoje=diaISO();
  try{const r=await fetch('mares.json',{cache:'no-store'});if(r.ok){const j=await r.json();if(j[hoje]){TIDE=j;renderC2();
   document.getElementById('C2-fonte').textContent='Tábua de marés · Morro de São Paulo · não use para navegação';return;}}}catch(e){}
@@ -424,13 +476,13 @@ let idx=0,timer=null,dotsEl;
 function show(i){ORDER.forEach((id,k)=>document.getElementById(id).classList.toggle('active',k===i));
  [...dotsEl.children].forEach((d,k)=>d.classList.toggle('on',k===i));
  const id=ORDER[i];document.getElementById('topbar').className='topbar'+(DARK.includes(id)?' on-dark':'');
- if(id==='C2')renderC2();if(id==='C3')showPisc();if(id==='C5')showQuar();if(id==='C7')showDica();if(id==='C9')showBahia();if(id==='C10')showGer();if(id==='C11')showPraia();if(id==='C6')showAgua();
+ if(id==='C2')renderC2();if(id==='C12')renderC12();if(id==='C3')showPisc();if(id==='C5')showQuar();if(id==='C7')showDica();if(id==='C9')showBahia();if(id==='C10')showGer();if(id==='C11')showPraia();if(id==='C6')showAgua();
  clearTimeout(timer);timer=setTimeout(next,(DUR[id]||11)*1000);}
 function next(){idx=(idx+1)%ORDER.length;show(idx);}
 function boot(){document.querySelectorAll('[data-flor]').forEach(e=>e.innerHTML=FLOR);
  dotsEl=document.getElementById('dots');dotsEl.innerHTML='';ORDER.forEach((_,i)=>{const d=document.createElement('div');d.className='dot'+(i===0?' on':'');dotsEl.appendChild(d);});
  tick();setInterval(tick,30000);renderC4(CONFIG.demoWeather);loadWeather();setInterval(loadWeather,36e5);
- loadTide();setInterval(loadTide,36e5);showPisc();showQuar();showBahia();showDica();showGer();showPraia();showAgua();show(0);}
+ loadTide();setInterval(loadTide,36e5);showPisc();showQuar();showBahia();showDica();showGer();showPraia();showAgua();renderC12();show(0);}
 boot();
 
 </script>
